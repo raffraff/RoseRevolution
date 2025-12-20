@@ -41,9 +41,4 @@ Unity will import everything as Unit assets and so you can work with proper form
 # Help
 
 Want to lend a hand and contribute?
-Join us on our Discord → Link
-
-# Rose Revolution
-A Unity client of the MMORPG R.O.S.E Online
-
-Discord Server : https://discord.gg/2SxQWtMC3X
+Join us on our [Discord Server](https://discord.gg/2SxQWtMC3X)
