@@ -18,7 +18,7 @@ Some of us were also part of the very rich ROSE private server scene in the past
 Our goal is to provide players with a brand-new client and a modern server.
 ROSE Online is no longer a young game, and both the client and server were originally written in rather outdated C++. Additionally, the official source code is not legally accessible.
 
-![GIF](https://i.imgur.com/mkLrDY3.gif)
+![stb2](https://github.com/user-attachments/assets/07cd3391-2041-4e20-848c-dee94027550c)
 
 # Which Version of ROSE Online?
 
