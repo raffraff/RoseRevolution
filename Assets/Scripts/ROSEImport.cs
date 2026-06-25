@@ -295,14 +295,16 @@ public class ROSEImport
         if (!File.Exists(texPath))
         {
             Directory.CreateDirectory(Path.GetDirectoryName(texPath));
-            File.Copy(fullPath, texPath);
-            AssetHelper.ImportTexture(texPath, doneFn);
+            File.Copy(fullPath, texPath, true);
         }
-        else
-        {
-            AssetHelper.Delay(doneFn);
-        }
-        return AssetDatabase.LoadAssetAtPath<Texture2D>(texPath);
+
+        AssetDatabase.ImportAsset(texPath, ImportAssetOptions.ForceUpdate | ImportAssetOptions.ForceSynchronousImport);
+        var loaded = AssetDatabase.LoadAssetAtPath<Texture2D>(texPath);
+        if (loaded == null)
+            Debug.LogWarning("Failed to load imported texture asset: " + texPath);
+
+        doneFn?.Invoke();
+        return loaded;
     }
 
 

@@ -192,7 +192,7 @@ public class RoseTerrainWindow : EditorWindow
         terrainObjects.transform.position = new Vector3(5200.0f, 0.0f, 5200.0f);
 
 
-        var worldManager = FindAnyObjectByType<SandboxManager>(); // Akima : this will be removed when everything will be off editor scripts
+        var worldManager = FindAnyObjectByType<RoseClassicGameManager>();
 
         GameObject spawns = new GameObject();
         spawns.name = "Spawn Points";

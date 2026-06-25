@@ -1,12 +1,12 @@
-#if UNITY_EDITOR
-
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEditor;
 using UnityRose.Formats;
 using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace UnityRose.Game
 {
@@ -293,9 +293,14 @@ namespace UnityRose.Game
             Material material = null;
             if (realTimeBaking)
             {
-                material = (Material)AssetDatabase.LoadMainAssetAtPath("Assets/Materials/JPT01.mat"); // new Material(Shader.Find( "Custom/StandardTerrain"));
-                                                                                                      //material.SetTexture("_MainTex", atlas);
-                                                                                                      //material.SetTexture("_DetailAlbedoMap", atlas);
+#if UNITY_EDITOR
+                material = (Material)AssetDatabase.LoadMainAssetAtPath("Assets/Materials/JPT01.mat");
+#else
+                material = new Material(Shader.Find("Custom/TerrainShader2"));
+                material.SetTexture("_BottomTex", atlas);
+                material.SetTexture("_TopTex", atlas);
+                material.SetTexture("_LightTex", lightTex);
+#endif
             }
             else
             {
@@ -808,8 +813,4 @@ namespace UnityRose.Game
             return new Vector2((uv.x * bottomRect.width) + bottomRect.x, (uv.y * bottomRect.height) + bottomRect.y);
         }
     }
-
-
 }
-
-#endif

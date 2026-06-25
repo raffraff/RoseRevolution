@@ -42,8 +42,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 13
-  m_BakeOnSceneLoad: 0
+  serializedVersion: 12
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -3486,8 +3485,10 @@ GameObject:
   m_Component:
   - component: {fileID: 799973364}
   - component: {fileID: 799973365}
+  - component: {fileID: 799973366}
+  - component: {fileID: 799973367}
   m_Layer: 0
-  m_Name: Sandbox Manager
+  m_Name: Rose Network
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3517,27 +3518,47 @@ MonoBehaviour:
   m_GameObject: {fileID: 799973363}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1ec9e88d1afb654a8c1dd9e7b938e4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6fb71f2a7bf272e47af09966de12d6f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  address: 82.64.152.244
-  port: 27350
-  playerName: Akima
-  gender: 2
-  hair: 30
-  face: 15
-  back: 233
-  body: 225
-  gloves: 0
-  shoes: 73
-  mask: 33
-  hat: 0
-  weapon: 277
-  shield: 0
-  spawnPosition: {x: 4905.7456, y: 9.494013, z: 5063.0947}
-  cameraController: {fileID: 330585548}
+  loginHost: 127.0.0.1
+  loginPort: 29000
+  defaultChannel: 1
+--- !u!114 &799973366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799973363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17481736cf6f92b449565995ca2e1d94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   worldManager: {fileID: 1866922962}
   guiController: {fileID: 395208670}
+  spawnPosition: {x: 4905.746, y: 9.494013, z: 5063.095}
+  loadMapAtRuntime: 0
+  sceneSpawnRoot: {fileID: 0}
+  fallbackMapId: 2
+  spawnFacingY: 0
+--- !u!114 &799973367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799973363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad2cb9c6faab63f44bd02b9816ab9f6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultUsername: test
+  defaultPassword: test
+  initialWindowPosition: {x: 20, y: 20}
+  windowSize: {x: 360, y: 420}
 --- !u!1 &801664369
 GameObject:
   m_ObjectHideFlags: 0
@@ -4381,7 +4402,7 @@ MonoBehaviour:
   m_text: "\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 0e7d061c40ff6374ba2a4e7b7c9a7b54, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
