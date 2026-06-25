@@ -586,9 +586,8 @@ namespace UnityRose.Formats
                                 
                                 if (System.IO.File.Exists(resolvedPath))
                                 {
-                                    // Get relative path for ImportTexture
                                     string relativePath = Path.GetRelativePath(ROSEImport.GetDataPath(), resolvedPath);
-                                    tex.Tex = Utils.duplicateTexture(ROSEImport.ImportTexture(relativePath, false)); // Akima : Duplicate it, so it become readable
+                                    tex.Tex = Utils.MakeTextureReadable(ROSEImport.ImportTexture(relativePath, false));
                                 }
                                 else
                                 {

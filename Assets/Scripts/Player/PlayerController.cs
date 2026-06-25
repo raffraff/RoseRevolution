@@ -203,10 +203,13 @@ namespace UnityRose
 					else if (Physics.Raycast(camRay, out floorHit, camRayLength, floorMask))
 						destinationPosition = floorHit.point;
 
-					// Send a clicked on ground packet
-					//NetworkManager.Send(new GroundClick(gameObject.name, destinationPosition)); // TODO : Here send ours instead
-					Client.Instance.SendPacket(Packets.Move(destinationPosition));
-					//destinationPosition = transform.position; // TODO: restore this
+					// Send movement to game server (original ROSE protocol)
+					if (RoseClassic.RoseNetworkManager.Instance != null)
+					{
+						Vector3 server = RoseClassic.RoseCoordinates.UnityToServer(transform.position);
+						short posZ = (short)server.z;
+						RoseClassic.RoseNetworkManager.Instance.SendMove(destinationPosition, posZ);
+					}
 				}
 			}
 		}

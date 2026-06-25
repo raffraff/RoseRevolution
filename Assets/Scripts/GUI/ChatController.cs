@@ -35,9 +35,9 @@ public class ChatController : MonoBehaviour
     /// <param name="text">Text.</param>
     private void OnSubmit(string text)
     {
-        if (!string.IsNullOrEmpty(text))
+        if (!string.IsNullOrEmpty(text) && RoseClassic.RoseNetworkManager.Instance != null)
         {
-            Client.Instance.SendPacket(Packets.SendChatMessage(input.text));
+            RoseClassic.RoseNetworkManager.Instance.SendChat(input.text);
 
             input.text = "";
         }

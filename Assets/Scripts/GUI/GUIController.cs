@@ -1,5 +1,3 @@
-using RevolutionShared.Networking.Packets;
-using RevolutionShared.Packets;
 using System;
 using TMPro;
 using UnityEngine;

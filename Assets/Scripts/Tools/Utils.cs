@@ -459,17 +459,34 @@ public class Utils
         return AssetDatabase.LoadAssetAtPath<Texture2D>(dest);
     }
 
-    public static Texture2D duplicateTexture(Texture2D source)
+    public static Texture2D duplicateTexture(Texture2D source) => MakeTextureReadable(source);
+
+    public static Texture2D MakeTextureReadable(Texture2D source)
     {
-        byte[] pix = source.GetRawTextureData();
-        Texture2D readableText = new Texture2D(source.width, source.height, source.format, false);
-        readableText.LoadRawTextureData(pix);
-        readableText.Apply(false, false);
-        return readableText;
+        if (source == null)
+            return null;
+
+        try
+        {
+            if (source.isReadable)
+                return source;
+
+            byte[] pix = source.GetRawTextureData();
+            var readableText = new Texture2D(source.width, source.height, source.format, false);
+            readableText.LoadRawTextureData(pix);
+            readableText.Apply(false, false);
+            return readableText;
+        }
+        catch
+        {
+            return duplicateTexture2(source);
+        }
     }
 
     public static Texture2D duplicateTexture2(Texture2D source)
     {
+        if (source == null)
+            return null;
         RenderTexture renderTex = RenderTexture.GetTemporary(
                     source.width,
                     source.height,

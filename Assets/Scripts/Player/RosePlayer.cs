@@ -144,8 +144,10 @@ public class RosePlayer : IPointerClickHandler
 
         bindPoses = rm.loadBindPoses(skeleton, gender, weapType);
         skeleton.transform.parent = player.transform;
-        skeleton.transform.localPosition = new Vector3(0, 0, 0);
-        skeleton.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        skeleton.transform.localPosition = Vector3.zero;
+        skeleton.transform.localRotation = Quaternion.identity;
+        // ROSE avatar data is left-handed on X relative to Unity; flip skeleton only (player movement unchanged).
+        skeleton.transform.localScale = new Vector3(-1f, 1f, 1f);
 
 
         // If player has already been initialized, make sure it knows that the skeleton has changed in order to restart its state machine with new animations
@@ -315,21 +317,11 @@ public class RosePlayer : IPointerClickHandler
                 break;
             case BodyPartType.WEAPON:
                 if (charModel.weapon == WeaponType.DSW || charModel.weapon == WeaponType.KATAR)
-                {
-                    modelObject.transform.parent = Utils.findChild(skeleton, dummy == ZSC.DummyType.RightHand ? "p_00" : "p_01"); // Akima : reference the anchors instead of a costly findChild
-                }
+                    modelObject.transform.parent = Utils.findChild(skeleton, dummy == ZSC.DummyType.RightHand ? "p_00" : "p_01");
+                else if (charModel.weapon == WeaponType.BOW)
+                    modelObject.transform.parent = Utils.findChild(skeleton, "p_01");
                 else
-                {
-                    if (charModel.weapon == WeaponType.BOW) // Akima : Use ZSC file instead of just guessing
-                    {
-                        modelObject.transform.parent = Utils.findChild(skeleton, "p_01");
-                    }
-
-                    else
-                    {
-                        modelObject.transform.parent = Utils.findChild(skeleton, "p_00");
-                    }
-                }
+                    modelObject.transform.parent = Utils.findChild(skeleton, "p_00");
                 break;
             case BodyPartType.SUBWEAPON:
                 modelObject.transform.parent = Utils.findChild(skeleton, "p_02");
@@ -338,7 +330,7 @@ public class RosePlayer : IPointerClickHandler
                 modelObject.transform.parent = Utils.findChild(skeleton, "p_04");
                 break;
             default:
-                modelObject.transform.parent = skeleton.transform.parent.transform;
+                modelObject.transform.parent = skeleton.transform;
                 break;
         }
 
@@ -351,10 +343,12 @@ public class RosePlayer : IPointerClickHandler
         {
             SkinnedMeshRenderer renderer = modelObject.AddComponent<SkinnedMeshRenderer>();
 
-            mesh.bindposes = bindPoses.bindPoses;
+            Transform meshRoot = modelObject.transform;
+            mesh.bindposes = ComputeMeshBindPoses(meshRoot, bindPoses.boneTransforms);
             renderer.sharedMesh = mesh;
             renderer.material = material;
             renderer.bones = bindPoses.boneTransforms;
+            renderer.rootBone = skeleton.transform;
         }
         else
         {
@@ -365,6 +359,20 @@ public class RosePlayer : IPointerClickHandler
 
         return mesh.bounds;
 
+    }
+
+    static Matrix4x4[] ComputeMeshBindPoses(Transform meshRoot, Transform[] bones)
+    {
+        var poses = new Matrix4x4[bones.Length];
+        for (int i = 0; i < bones.Length; i++)
+        {
+            if (bones[i] == null)
+                continue;
+
+            poses[i] = bones[i].worldToLocalMatrix * meshRoot.localToWorldMatrix;
+        }
+
+        return poses;
     }
 
     public void setAnimationState(States state)

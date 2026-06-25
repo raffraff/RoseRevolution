@@ -46,7 +46,8 @@ public class WorldManager : MonoBehaviour
 
         rosePlayer.equip(BodyPartType.FACEITEM, maskID);
         rosePlayer.equip(BodyPartType.WEAPON, weaponID);
-        //rosePlayer.equip(BodyPartType.SUBWEAPON, subWeaponID);
+        if (subWeaponID > 0)
+            rosePlayer.equip(BodyPartType.SUBWEAPON, subWeaponID);
 
         if (mainPlayer)
         {
